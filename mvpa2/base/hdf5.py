@@ -819,8 +819,8 @@ def obj2hdf(hdf, obj, name=None, memo=None, noid=False, **kwargs):
                         raise HDF5ConversionError("Cannot store locally defined "
                                                   "class '%s'" % cls_name)
         # store class info (fully-qualified)
-        grp.attrs.create('class', cls_name)
-        grp.attrs.create('module', src_module)
+        grp.attrs.create('class', cls_name.encode('ascii'))
+        grp.attrs.create('module', src_module.encode('ascii'))
         if __debug__:
             debug('HDF5', "Stored class info: %s.%s"
                           % (src_module, cls_name))
@@ -846,8 +846,8 @@ def obj2hdf(hdf, obj, name=None, memo=None, noid=False, **kwargs):
         if __debug__:
             debug('HDF5', "Use custom __reduce__ for storage: (%i arguments)."
                           % len(pieces[1]))
-        grp.attrs.create('recon', pieces[0].__name__)
-        grp.attrs.create('module', pieces[0].__module__)
+        grp.attrs.create('recon', pieces[0].__name__.encode('ascii'))
+        grp.attrs.create('module', pieces[0].__module__.encode('ascii'))
         if __debug__:
             debug('HDF5', "Stored reconstructor info: %s.%s"
                           % (pieces[0].__module__, pieces[0].__name__))
